@@ -1,0 +1,183 @@
+# 💰 Expense Tracker
+
+A full-stack personal expense tracking web app with user authentication, charts, and transaction management — built with HTML, CSS, JavaScript and Python Flask.
+
+---
+
+## 📁 Project Structure
+
+```
+ExpenseTracker/
+├── Frontend/
+│   ├── login.html       # Login & Register page
+│   ├── index.html       # Main dashboard (protected)
+│   ├── auth.js          # Login/register logic + token storage
+│   ├── script.js        # Dashboard logic + charts + CRUD
+│   └── style.css        # All styles (auth + dashboard)
+├── Backend/
+│   └── server.py        # Flask REST API
+├── Database/
+│   └── expenses.db      # SQLite database (auto-created)
+└── README.md
+```
+
+---
+
+## ⚙️ Tech Stack
+
+| Layer     | Technology              |
+|-----------|-------------------------|
+| Frontend  | HTML, CSS, JavaScript   |
+| Backend   | Python, Flask           |
+| Database  | SQLite                  |
+| Auth      | JWT (JSON Web Token)    |
+| Charts    | Chart.js                |
+| Icons     | Font Awesome            |
+
+---
+
+## 🚀 How to Run
+
+### Step 1 — Install Python dependencies
+
+```bash
+pip install flask flask-cors pyjwt
+```
+
+### Step 2 — Start the backend server
+
+```bash
+cd rtp/ExpenseTracker/Backend
+python server.py
+```
+
+You should see:
+```
+* Running on http://127.0.0.1:5000
+```
+
+### Step 3 — Open the frontend
+
+In VS Code:
+- Right-click `Frontend/login.html`
+- Click **Open with Live Server**
+
+Or just double-click `login.html` to open in browser.
+
+### Step 4 — Register and use
+
+```
+1. Open login.html
+2. Click "Register" → enter name, email, password
+3. Auto redirects to dashboard (index.html)
+4. Add income/expense transactions
+5. View charts and transaction list
+6. Click Logout when done
+```
+
+---
+
+## 🔐 Authentication Flow
+
+```
+Register → credentials saved to expenses.db
+Login    → password verified → JWT token issued
+Token    → stored in browser localStorage (24hr expiry)
+Dashboard → token sent with every API request
+Logout   → token removed from localStorage
+```
+
+---
+
+## 📊 Features
+
+- ✅ User registration and login
+- ✅ JWT-based authentication (per-user data)
+- ✅ Add income and expense transactions
+- ✅ Categories: Food, Transport, Shopping, Health, Entertainment, Bills, Education, Salary, Other
+- ✅ Monthly filter (pick any month)
+- ✅ Summary cards — Income, Expenses, Balance
+- ✅ Doughnut chart — spending by category
+- ✅ Bar chart — income vs expenses
+- ✅ Transaction list with search
+- ✅ Delete transactions
+- ✅ Currency in ₹ (Indian Rupee)
+- ✅ Responsive design (mobile friendly)
+
+---
+
+## 🌐 API Endpoints
+
+| Method | Route | Description | Auth Required |
+|--------|-------|-------------|---------------|
+| POST | `/register` | Create new account | No |
+| POST | `/login` | Login, get JWT token | No |
+| GET | `/expenses` | Get all transactions | Yes |
+| POST | `/expenses` | Add new transaction | Yes |
+| DELETE | `/expenses/<id>` | Delete transaction | Yes |
+| GET | `/summary` | Get income/expense summary + by category | Yes |
+
+---
+
+## 🗄️ Database Tables
+
+### users
+| Column   | Type    | Description          |
+|----------|---------|----------------------|
+| id       | INTEGER | Primary key          |
+| name     | TEXT    | Full name            |
+| email    | TEXT    | Unique email         |
+| password | TEXT    | SHA-256 hashed       |
+
+### expenses
+| Column   | Type    | Description              |
+|----------|---------|--------------------------|
+| id       | INTEGER | Primary key              |
+| user_id  | INTEGER | Foreign key → users.id   |
+| title    | TEXT    | Transaction title        |
+| amount   | REAL    | Amount in ₹              |
+| category | TEXT    | Category name            |
+| type     | TEXT    | `income` or `expense`    |
+| date     | TEXT    | Date (YYYY-MM-DD)        |
+| note     | TEXT    | Optional note            |
+
+---
+
+## 🖥️ Screenshots
+
+```
+login.html   →  Login / Register form
+index.html   →  Dashboard with summary cards, charts, transaction list
+```
+
+---
+
+## ⚠️ Common Issues
+
+| Problem | Solution |
+|---------|----------|
+| "Cannot connect to server" | Make sure `python server.py` is running |
+| Login not working | Run `pip install pyjwt` and restart server |
+| Blank dashboard | Clear localStorage in browser DevTools and re-login |
+| Charts not showing | Make sure Chart.js CDN loads (needs internet) |
+
+---
+
+## 📦 Dependencies
+
+```
+flask
+flask-cors
+pyjwt
+```
+
+Install all at once:
+```bash
+pip install flask flask-cors pyjwt
+```
+
+---
+
+## 👤 Author
+
+Built with HTML · CSS · JavaScript · Python Flask · SQLite
